@@ -1,0 +1,46 @@
+wsl
+1. ssh username@rangpur.compute.eait.uq.edu.au
+2. Compile LIGGGHTS first, load MPI module
+3. switch to develop branch (git switch develop)
+
+setup key pair for cluster
+
+to copy to cluster
+scp rangpurRun_TCLB-LIGGGHTS.sh s########@rangpur.compute.eait.uq.edu.au:/home/Student/s########/
+
+to run stuff:
+bash rangpurRun_TCLB-LIGGGHTS.sh channel_tutorial.xml in.channel_tutorial 1 test
+
+To compile LIGGGHTS:
+1. git clone https://github.com/CFDEMproject/LIGGGHTS-PUBLIC.git
+2. cd LIGGGHTS-PUBLIC/src
+3. make auto
+4. nano MAKE/Makefile.user
+5. Disable VTK and SuperQuadratics
+6. make clean-all to remove any partially made files
+7. make makeshlib or make -f Makefile.shlib auto -j8
+8. May need to get the mpi module
+	8.1 module avail mpi
+	8.2 module load mpi/openmpi-x86_64
+	8.3 Run 7 again
+9. LIGGGHTS should be compiled
+
+To compile TCLB:
+1. git clone https://github.com/CFD-GO/TCLB.git
+2. cd TCLB
+3. git switch develop
+4. clone cluster tools: git clone https://github.com/CFD-GO/TCLB_cluster.git p
+5. make config or make configure
+6. p/config
+7. make -j 10 d3q27_PSM_NEBB
+8. May need to load some modules:
+	8.1 Load CUDA: module load cuda/11.1
+	8.2 Load mpi: module load mpi/openmpi-x86_64
+	8.3 Use module avail [module] to check the location and name
+9. Run 7 again
+
+To run:
+1. Create the required files in.name and name.xml then run using batch script
+2. bash rangpurRun_TCLB-LIGGGHTS.sh channel_tutorial.xml in.channel_tutorial 1 test
+3. squeue to check if it ran
+4. mkdir logs to see logs
