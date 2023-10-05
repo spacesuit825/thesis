@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<CLBConfig version="2.0" output="output/pack02/">
+	<Units>
+		<Param value="0.00005m" gauge="1"/>
+		<Param value="0.0000010416s" gauge="1"/>
+		<Param value="1000kg/m3" gauge="1"/>
+		
+	</Units>
+	<Geometry nx="0.008m" ny="0.0064m" nz="0.008m">
+		
+        <BGK><Box/></BGK>
+		
+        <Wall mask="ALL" name="Wall">
+            <STL file="/home/spacesuit825/TCLB/scenes/pack_test_01/pack006.stl" scale="0.0001m" side="in"/>
+		</Wall>
+    </Geometry>
+    <Model>
+        <Param name="omegaF" value="1.0"/>
+		<Param name="VelocityY" value="-0.1"/>
+        <RemoteForceInterface integrator="LAMMPS"/>
+	</Model>
+	<VTK what="U,BOUNDARY,COLLISION,Solid"/>
+	<VTK Iterations="1000" what="U,Solid"/>
+	<Solve Iterations="20000"/>
+</CLBConfig>
